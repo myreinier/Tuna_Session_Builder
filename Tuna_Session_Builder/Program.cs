@@ -3,35 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using Tuna_Session_Builder.Business;
 using Tuna_Session_Builder.Domain;
+using Tuna_Session_Builder.Domain.Objects;
 
 namespace Tuna_Session_Builder
 {
     class Program
     {
-        static readonly SongService songService = new();
+        static readonly SongService songService = new(new Mockdata());
         static Dictionary<int, Song> songList = new();
         static readonly List<Song> sessionList = new();
         static List<Song> suggestionList = new();
-
+        static List<Song> songs = songService.Get().ToList();
         static void Main(string[] args)
         {
-            GetAllSongs();
-
             MainMenu();
         }
 
         static void MainMenu()
         {
+            Console.WriteLine("SessionList: ");
             foreach( var song in sessionList)
-                Console.WriteLine(song.Title);
-
-            Console.WriteLine("Choose from the list of suggestions: ");
-
+                Console.WriteLine($"- {song.Title}");
 
             if (sessionList.Count == 0)
             {
                 FirstSong();
-            } else if (sessionList.Count == 6)
+            } else if (sessionList.Count >= 5)
             {
                 LastSong();
             } else
@@ -42,7 +39,8 @@ namespace Tuna_Session_Builder
 
         static void FirstSong()
         {
-            suggestionList = songService.Search("Starter");
+            Console.WriteLine("Choose from the list of suggestions: ");
+            suggestionList = songService.Search(songs, "Starter");
             RemoveRepeats();
 
             AddMenuIDs();
@@ -50,10 +48,21 @@ namespace Tuna_Session_Builder
             {
                 Console.WriteLine($"{song.Key}. {song.Value.Title} ({song.Value.Type})");
             }
+            Console.WriteLine($"{songList.Count + 1}. Search");
 
-            var choice = Console.ReadKey();
+            var choice = Console.ReadKey().KeyChar - '0';
 
-            sessionList.Add(songList[choice.KeyChar - '0']);
+            if (choice > 0 && choice <= suggestionList.Count)
+            {
+                sessionList.Add(songList[choice]);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Please enter a valid option");
+                FirstSong();
+            }
+            
 
             Console.Clear();
             MainMenu();
@@ -61,7 +70,8 @@ namespace Tuna_Session_Builder
 
         static void LastSong()
         {
-            suggestionList = songService.Search("Finisher");
+            Console.WriteLine("Choose from the list of suggestions: ");
+            suggestionList = songService.Search(songs, "Finisher");
             RemoveRepeats();
 
             AddMenuIDs();
@@ -70,9 +80,18 @@ namespace Tuna_Session_Builder
                 Console.WriteLine($"{song.Key}. {song.Value.Title} ({song.Value.Type})");
             }
 
-            var choice = Console.ReadKey();
+            var choice = Console.ReadKey().KeyChar - '0';
 
-            sessionList.Add(songList[choice.KeyChar - '0']);
+            if (choice > 0 && choice <= suggestionList.Count)
+            {
+                sessionList.Add(songList[choice]);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Please enter a valid option");
+                LastSong();
+            }
 
             Console.Clear();
 
@@ -84,8 +103,9 @@ namespace Tuna_Session_Builder
 
         static void NextSong()
         {
+            Console.WriteLine("Choose from the list of suggestions: ");
             var query = sessionList.Last().Type;
-            suggestionList = songService.Suggestion(query);
+            suggestionList = songService.Suggestion(songs, query);
             RemoveRepeats();
 
             AddMenuIDs();
@@ -94,17 +114,21 @@ namespace Tuna_Session_Builder
                 Console.WriteLine($"{song.Key}. {song.Value.Title} ({song.Value.Type})");
             }
 
-            var choice = Console.ReadKey();
+            var choice = Console.ReadKey().KeyChar - '0';
 
-            sessionList.Add(songList[choice.KeyChar - '0']);
+            if (choice > 0 && choice <= suggestionList.Count)
+            {
+                sessionList.Add(songList[choice]);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Please enter a valid option");
+                NextSong();
+            }
 
             Console.Clear();
             MainMenu();
-        }
-
-        static void GetAllSongs()
-        {
-            var songs = songService.Get().ToList(); 
         }
 
         static void AddMenuIDs()

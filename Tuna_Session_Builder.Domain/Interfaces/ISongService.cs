@@ -18,7 +18,7 @@ namespace Tuna_Session_Builder.Domain.Interfaces
         /// Searches for a song by Title, Type or Information
         /// </summary>
         /// <returns>List of Songs with query</returns>
-        public List<Song> Search(string query);
+        public List<Song> Search(List<Song> songs, string query);
 
         /// <summary>
         /// Compares songs in list and determines if consecutive songs should not be next to each other

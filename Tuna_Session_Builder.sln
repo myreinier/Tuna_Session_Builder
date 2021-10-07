@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna_Session_Builder.Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna_Session_Builder.Business.Test", "Tuna_Session_Builder.Business.Test\Tuna_Session_Builder.Business.Test.csproj", "{5D43D0A7-1D45-424C-A973-27957340EE8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tuna_Session_Builder.WinForms", "Tuna_Session_Builder.WinForms\Tuna_Session_Builder.WinForms.csproj", "{BF7CBD1F-36D6-47F7-9FF1-946E097088FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{5D43D0A7-1D45-424C-A973-27957340EE8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D43D0A7-1D45-424C-A973-27957340EE8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D43D0A7-1D45-424C-A973-27957340EE8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF7CBD1F-36D6-47F7-9FF1-946E097088FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF7CBD1F-36D6-47F7-9FF1-946E097088FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF7CBD1F-36D6-47F7-9FF1-946E097088FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF7CBD1F-36D6-47F7-9FF1-946E097088FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
